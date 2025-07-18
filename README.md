@@ -1,78 +1,60 @@
-# Abliteration: Uncensoring Large Language Models (LLMs)
+# LLM Uncensoring & Quantization: Beginner to Advanced
 
-## Introduction
+Welcome to the consolidated resource for making Large Language Models (LLMs) more accessible and flexible. This repository provides:
+- **Abliteration**: Techniques to remove censorship from LLMs for research and auditing.
+- **Quantization**: Methods to run and fine-tune large models efficiently on consumer hardware.
 
-**Abliteration** is a technique introduced to remove censorship or refusal behaviors from Large Language Models (LLMs). This repository provides a beginner-friendly, step-by-step guide to understanding and implementing abliteration, with detailed explanations and code samples.
-
-> **Disclaimer:** This repository is for educational and research purposes only. Uncensoring LLMs can have ethical and legal implications. Please use responsibly and respect the terms of service of any models or platforms you use.
-
----
-
-## What is Abliteration?
-
-Abliteration is a method to make LLMs stop refusing to answer certain questions (e.g., those flagged as unsafe or against content policies). It works by identifying and removing the directions in the model's hidden space that are responsible for refusal behaviors, without retraining the model from scratch.
-
-### Why do LLMs Refuse?
-
-Modern LLMs are often fine-tuned to refuse answering certain prompts ("I'm sorry, I can't help with that"). This is done for safety and compliance. However, for research, auditing, or red-teaming, it can be useful to study how these refusals are implemented and how they can be removed.
+> **Note:** All content is for research and educational purposes only. Please use responsibly and ethically.
 
 ---
 
-## How Does Abliteration Work?
+## 📚 Learning Path: Beginner to Advanced
 
-Abliteration involves three main steps:
-
-1. **Data Collection:** Gather pairs of prompts and their corresponding refusal responses from the model.
-2. **Refusal Direction Calculation:** Use these pairs to compute the "refusal direction" in the model's hidden space.
-3. **Inference-Time Intervention:** At inference, project out the refusal direction from the model's activations, making it less likely to refuse.
-
-We provide code samples for each step in this repository, now located in the `abliteration/` folder.
-
----
-
-## Step-by-Step Guide
-
-### 1. Data Collection
-- Collect prompts that trigger refusals and record the model's responses.
-- See [`abliteration/data_collection.py`](./abliteration/data_collection.py) for a sample script.
-
-### 2. Refusal Direction Calculation
-- Use the collected data to compute the direction in the hidden space associated with refusals.
-- See [`abliteration/compute_direction.py`](./abliteration/compute_direction.py).
-
-### 3. Inference-Time Intervention
-- Modify the model's activations during inference to remove the refusal direction.
-- See [`abliteration/inference_intervention.py`](./abliteration/inference_intervention.py).
-
-### 4. (Optional) Weight Orthogonalization
-- For a more permanent change, you can orthogonalize the model's weights to the refusal direction.
-- See [`abliteration/orthogonalize_weights.py`](./abliteration/orthogonalize_weights.py).
+### 1. **Start Here: Key Concepts**
+- **What are LLMs?**
+  - Large Language Models (LLMs) are AI models trained to understand and generate human language.
+- **Why Uncensor or Quantize?**
+  - Uncensoring (abliteration) helps researchers study model behavior without safety filters.
+  - Quantization makes big models usable on regular hardware.
 
 ---
 
-## Ethical Considerations
-
-- **Safety:** Removing refusal mechanisms can make models output unsafe or harmful content. Always use with caution.
-- **Legality:** Ensure you comply with the terms of service of the model provider.
-- **Transparency:** Document your changes and reasons for uncensoring.
-
----
-
-## References
-
-- [Abliteration: Uncensoring LLMs by Maxime Labonne (Hugging Face Blog)](https://huggingface.co/blog/mlabonne/abliteration)
-- [Original Abliteration Code (Hugging Face)](https://github.com/mlabonne/abliteration)
+### 2. **Abliteration (Uncensoring LLMs)**
+- **Goal:** Remove refusal behaviors from LLMs for research and interpretability.
+- **Beginner-Friendly Guide:**
+  - Step-by-step explanations and code samples.
+  - Ethical considerations and usage warnings.
+- **Get Started:**
+  - [Abliteration Guide & Scripts](./abliteration/README.md)
 
 ---
 
-## Getting Started
-
-1. Clone this repository.
-2. Install dependencies (see [`requirements.txt`](./requirements.txt)).
-3. Follow the step-by-step guide above, using scripts in the `abliteration/` folder.
+### 3. **Quantization (Efficient LLMs)**
+- **Goal:** Run and fine-tune large models on limited hardware using fewer bits.
+- **Beginner to Advanced:**
+  - Simple explanations of quantization, QLoRA, and related concepts.
+  - Practical code examples and advanced configuration options.
+- **Get Started:**
+  - [Quantization Guide](./quantization/README.md)
 
 ---
 
-## License
+## 🔗 Additional Resources
+- [Original Abliteration Blogpost](https://huggingface.co/blog/mlabonne/abliteration)
+- [QLoRA Paper](https://arxiv.org/abs/2305.14314)
+- [bitsandbytes Library](https://github.com/TimDettmers/bitsandbytes)
+- [Hugging Face Transformers](https://github.com/huggingface/transformers)
+- [PEFT Library](https://github.com/huggingface/peft)
 
-This project is licensed for research and educational use only. See [LICENSE](./LICENSE) for details. 
+---
+
+## ⚖️ License & Ethics
+- This repository is for research and educational use only.
+- Please review the [LICENSE](./LICENSE) before use.
+- Always consider the ethical implications of uncensoring or modifying LLMs.
+
+---
+
+## 👋 Contributing & Support
+- Contributions are welcome! Please open issues or pull requests for improvements.
+- For questions, start with the guides above or check the referenced resources. 
