@@ -1,14 +1,6 @@
 ---
 title: "Making LLMs even more accessible with bitsandbytes, 4-bit quantization and QLoRA" 
 thumbnail: /blog/assets/96_hf_bitsandbytes_integration/Thumbnail_blue.png
-authors:
-- user: ybelkada
-- user: timdettmers
-  guest: true
-- user: artidoro
-  guest: true 
-- user: sgugger
-- user: smangrul
 ---
 
 # Making LLMs even more accessible with bitsandbytes, 4-bit quantization and QLoRA
