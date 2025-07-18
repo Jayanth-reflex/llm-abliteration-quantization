@@ -10,34 +10,18 @@ Welcome to the consolidated resource for making Large Language Models (LLMs) mor
 
 ## 📚 Learning Path: Beginner to Advanced
 
-### 1. **Start Here: Key Concepts**
-- **What are LLMs?**
-  - Large Language Models (LLMs) are AI models trained to understand and generate human language.
-- **Why Uncensor or Quantize?**
-  - Uncensoring (abliteration) helps researchers study model behavior without safety filters.
-  - Quantization makes big models usable on regular hardware.
-
----
-
-### 2. **Abliteration (Uncensoring LLMs)**
+### 1. **Abliteration (Uncensoring LLMs)**
 - **Goal:** Remove refusal behaviors from LLMs for research and interpretability.
-- **Beginner-Friendly Guide:**
-  - Step-by-step explanations and code samples.
-  - Ethical considerations and usage warnings.
 - **Get Started:**
   - [Abliteration Guide & Scripts](./abliteration/README.md)
 
 ---
 
-### 3. **Quantization (Efficient LLMs)**
+### 2. **Quantization (Efficient LLMs)**
 - **Goal:** Run and fine-tune large models on limited hardware using fewer bits.
-- **Comprehensive Reference:**
-  - [Comprehensive Quantization Guide for Large Language Models (LLMs)](./quantization/quantization_guide.md)
-- **Beginner to Advanced:**
-  - Simple explanations of quantization, QLoRA, and related concepts.
-  - Practical code examples and advanced configuration options.
-- **Get Started:**
-  - [Quantization Guide](./quantization/README.md)
+- **Unified Reference:**
+  - [Quantization for Large Language Models (LLMs): Beginner to Advanced](./quantization/quantization_all_levels.md)
+  - This guide integrates the latest research (including QLoRA) and is suitable for all users.
 
 ---
 
