@@ -1,5 +1,7 @@
 # Abliteration: Uncensoring Large Language Models (LLMs)
 
+> For model efficiency and deployment, see our [Quantization Golden Resource](../quantization/quantization_golden_resource.md).
+
 ## Introduction
 
 **Abliteration** is a technique introduced to remove censorship or refusal behaviors from Large Language Models (LLMs). This repository provides a beginner-friendly, step-by-step guide to understanding and implementing abliteration, with detailed explanations and code samples.
