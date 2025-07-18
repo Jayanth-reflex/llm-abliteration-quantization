@@ -34,19 +34,19 @@ We provide code samples for each step in this repository, now located in the `ab
 
 ### 1. Data Collection
 - Collect prompts that trigger refusals and record the model's responses.
-- See [`abliteration/data_collection.py`](./abliteration/data_collection.py) for a sample script.
+- See [`data_collection.py`](data_collection.py) for a sample script.
 
 ### 2. Refusal Direction Calculation
 - Use the collected data to compute the direction in the hidden space associated with refusals.
-- See [`abliteration/compute_direction.py`](./abliteration/compute_direction.py).
+- See [`compute_direction.py`](compute_direction.py).
 
 ### 3. Inference-Time Intervention
 - Modify the model's activations during inference to remove the refusal direction.
-- See [`abliteration/inference_intervention.py`](./abliteration/inference_intervention.py).
+- See [`inference_intervention.py`](inference_intervention.py).
 
 ### 4. (Optional) Weight Orthogonalization
 - For a more permanent change, you can orthogonalize the model's weights to the refusal direction.
-- See [`abliteration/orthogonalize_weights.py`](./abliteration/orthogonalize_weights.py).
+- See [`orthogonalize_weights.py`](orthogonalize_weights.py).
 
 ---
 
@@ -68,11 +68,11 @@ We provide code samples for each step in this repository, now located in the `ab
 ## Getting Started
 
 1. Clone this repository.
-2. Install dependencies (see [`requirements.txt`](./requirements.txt)).
+2. Install dependencies (see [`requirements.txt`](../requirements.txt)).
 3. Follow the step-by-step guide above, using scripts in the `abliteration/` folder.
 
 ---
 
 ## License
 
-This project is licensed for research and educational use only. See [LICENSE](./LICENSE) for details. 
+This project is licensed under the MIT License. See [LICENSE](../LICENSE) for details. 
