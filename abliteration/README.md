@@ -1,6 +1,6 @@
 # Abliteration: Uncensoring Large Language Models (LLMs)
 
-> For model efficiency and deployment, see our [Quantization Golden Resource](../quantization/quantization_golden_resource.md).
+> For model efficiency and deployment, see our [Comprehensive Quantization Guide](../quantization/quantization_guide.md).
 
 ## Introduction
 

@@ -31,8 +31,8 @@ Welcome to the consolidated resource for making Large Language Models (LLMs) mor
 
 ### 3. **Quantization (Efficient LLMs)**
 - **Goal:** Run and fine-tune large models on limited hardware using fewer bits.
-- **Best Resource:**
-  - [The Golden Resource: Quantization for Large Language Models (LLMs)](./quantization/quantization_golden_resource.md)
+- **Comprehensive Reference:**
+  - [Comprehensive Quantization Guide for Large Language Models (LLMs)](./quantization/quantization_guide.md)
 - **Beginner to Advanced:**
   - Simple explanations of quantization, QLoRA, and related concepts.
   - Practical code examples and advanced configuration options.
