@@ -26,7 +26,7 @@ Abliteration involves three main steps:
 2. **Refusal Direction Calculation:** Use these pairs to compute the "refusal direction" in the model's hidden space.
 3. **Inference-Time Intervention:** At inference, project out the refusal direction from the model's activations, making it less likely to refuse.
 
-We provide code samples for each step in this repository.
+We provide code samples for each step in this repository, now located in the `abliteration/` folder.
 
 ---
 
@@ -34,19 +34,19 @@ We provide code samples for each step in this repository.
 
 ### 1. Data Collection
 - Collect prompts that trigger refusals and record the model's responses.
-- See [`data_collection.py`](./data_collection.py) for a sample script.
+- See [`abliteration/data_collection.py`](./abliteration/data_collection.py) for a sample script.
 
 ### 2. Refusal Direction Calculation
 - Use the collected data to compute the direction in the hidden space associated with refusals.
-- See [`compute_direction.py`](./compute_direction.py).
+- See [`abliteration/compute_direction.py`](./abliteration/compute_direction.py).
 
 ### 3. Inference-Time Intervention
 - Modify the model's activations during inference to remove the refusal direction.
-- See [`inference_intervention.py`](./inference_intervention.py).
+- See [`abliteration/inference_intervention.py`](./abliteration/inference_intervention.py).
 
 ### 4. (Optional) Weight Orthogonalization
 - For a more permanent change, you can orthogonalize the model's weights to the refusal direction.
-- See [`orthogonalize_weights.py`](./orthogonalize_weights.py).
+- See [`abliteration/orthogonalize_weights.py`](./abliteration/orthogonalize_weights.py).
 
 ---
 
@@ -69,7 +69,7 @@ We provide code samples for each step in this repository.
 
 1. Clone this repository.
 2. Install dependencies (see [`requirements.txt`](./requirements.txt)).
-3. Follow the step-by-step guide above.
+3. Follow the step-by-step guide above, using scripts in the `abliteration/` folder.
 
 ---
 
