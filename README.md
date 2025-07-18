@@ -1,4 +1,4 @@
-# LLM Uncensoring & Quantization: Beginner to Advanced
+# LLM Abliteration & Quantization: Beginner to Advanced
 
 Welcome to the consolidated resource for making Large Language Models (LLMs) more accessible and flexible. This repository provides:
 - **Abliteration**: Techniques to remove censorship from LLMs for research and auditing.
