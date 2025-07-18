@@ -2,7 +2,7 @@
 
 ## Introduction
 
-**Abliteration** is a technique introduced by Maxime Labonne in [this Hugging Face blog post](https://huggingface.co/blog/mlabonne/abliteration) to remove censorship or refusal behaviors from Large Language Models (LLMs). This repository provides a beginner-friendly, step-by-step guide to understanding and implementing abliteration, with detailed explanations and code samples.
+**Abliteration** is a technique introduced to remove censorship or refusal behaviors from Large Language Models (LLMs). This repository provides a beginner-friendly, step-by-step guide to understanding and implementing abliteration, with detailed explanations and code samples.
 
 > **Disclaimer:** This repository is for educational and research purposes only. Uncensoring LLMs can have ethical and legal implications. Please use responsibly and respect the terms of service of any models or platforms you use.
 
