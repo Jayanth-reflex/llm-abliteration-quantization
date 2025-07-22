@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Optimization - Interactive Learning Map</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .container {
+            display: flex;
+            height: calc(100vh - 200px);
+            gap: 1rem;
+            padding: 1rem;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+        
+        .main-content {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        #network {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
+        
+        .filter-section {
+            margin-bottom: 2rem;
+        }
+        
+        .filter-section h3 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-button {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .filter-button:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .filter-button.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .difficulty-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        .info-panel {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+        }
+        
+        .info-panel h4 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+        
+        .info-panel p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .action-button {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .stats-panel {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+        }
+        
+        .progress-tracker {
+            margin-top: 2rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 LLM Optimization Learning Map</h1>
+        <p>Navigate your personalized learning journey through quantization, abliteration, and advanced optimization techniques</p>
+    </div>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="filter-section">
+                <h3>🎯 Learning Path</h3>
+                <div class="filter-group">
+                    <div class="filter-button active" data-filter="all">All Topics</div>
+                    <div class="filter-button" data-filter="beginner">🌱 Beginner</div>
+                    <div class="filter-button" data-filter="intermediate">🚀 Intermediate</div>
+                    <div class="filter-button" data-filter="advanced">🔬 Advanced</div>
+                    <div class="filter-button" data-filter="research">🎓 Research</div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3>📚 Topic Areas</h3>
+                <div class="filter-group">
+                    <div class="filter-button" data-topic="quantization">Quantization</div>
+                    <div class="filter-button" data-topic="abliteration">Abliteration</div>
+                    <div class="filter-button" data-topic="multimodal">Multi-Modal</div>
+                    <div class="filter-button" data-topic="distributed">Distributed</div>
+                    <div class="filter-button" data-topic="research">Novel Research</div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3>🏢 Research Sources</h3>
+                <div class="filter-group">
+                    <div class="filter-button" data-source="google">Google</div>
+                    <div class="filter-button" data-source="meta">Meta</div>
+                    <div class="filter-button" data-source="openai">OpenAI</div>
+                    <div class="filter-button" data-source="academic">Academic</div>
+                    <div class="filter-button" data-source="2024-2025">2024-2025</div>
+                </div>
+            </div>
+            
+            <div class="difficulty-legend">
+                <h3>📊 Difficulty Levels</h3>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #4CAF50;"></div>
+                    <span>Beginner (0-2 hours)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #2196F3;"></div>
+                    <span>Intermediate (2-8 hours)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #FF9800;"></div>
+                    <span>Advanced (8+ hours)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #9C27B0;"></div>
+                    <span>Research (PhD level)</span>
+                </div>
+            </div>
+            
+            <div class="stats-panel">
+                <h3>📈 Your Progress</h3>
+                <div class="stat-item">
+                    <span>Completed:</span>
+                    <span id="completed-count">0/47</span>
+                </div>
+                <div class="stat-item">
+                    <span>In Progress:</span>
+                    <span id="progress-count">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Time Invested:</span>
+                    <span id="time-spent">0 hours</span>
+                </div>
+                <div class="progress-tracker">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div id="network"></div>
+            <div class="info-panel" id="info-panel">
+                <h4 id="info-title">Select a topic to learn more</h4>
+                <p id="info-description">Click on any node in the learning map to see detailed information, prerequisites, and learning resources.</p>
+                <div class="action-buttons" id="action-buttons">
+                    <!-- Dynamic buttons will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Learning map data with 2024-2025 research updates
+        const learningData = {
+            nodes: [
+                // Beginner Level
+                {
+                    id: 1,
+                    label: "Quantization Basics",
+                    level: "beginner",
+                    topic: "quantization",
+                    source: "academic",
+                    time: 1,
+                    description: "Understanding number precision, memory usage, and basic quantization concepts",
+                    prerequisites: [],
+                    resources: ["tutorials/beginner/01_quantization_basics.ipynb"],
+                    year: "2024"
+                },
+                {
+                    id: 2,
+                    label: "Your First Model",
+                    level: "beginner",
+                    topic: "quantization",
+                    source: "academic",
+                    time: 0.5,
+                    description: "Hands-on quantization of a small language model",
+                    prerequisites: [1],
+                    resources: ["tutorials/beginner/02_first_quantization.ipynb"],
+                    year: "2024"
+                },
+                {
+                    id: 3,
+                    label: "CLI Tools Intro",
+                    level: "beginner",
+                    topic: "quantization",
+                    source: "academic",
+                    time: 0.5,
+                    description: "Using command-line tools for model optimization",
+                    prerequisites: [2],
+                    resources: ["docs/quickstart.md"],
+                    year: "2024"
+                },
+                
+                // Intermediate Level - Updated with 2024 research
+                {
+                    id: 4,
+                    label: "QLoRA Deep Dive",
+                    level: "intermediate",
+                    topic: "quantization",
+                    source: "academic",
+                    time: 2,
+                    description: "Complete understanding of QLoRA with NF4 and double quantization",
+                    prerequisites: [3],
+                    resources: ["educational_content/paper_implementations/core/qlora_paper.ipynb"],
+                    year: "2023"
+                },
+                {
+                    id: 5,
+                    label: "GPTQ Implementation",
+                    level: "intermediate",
+                    topic: "quantization",
+                    source: "academic",
+                    time: 3,
+                    description: "GPU-based post-training quantization with OBS updates",
+                    prerequisites: [4],
+                    resources: ["advanced_quantization/gptq_implementation.py"],
+                    year: "2022"
+                },
+                {
+                    id: 6,
+                    label: "AWQ Techniques",
+                    level: "intermediate",
+                    topic: "quantization",
+                    source: "academic",
+                    time: 3,
+                    description: "Activation-aware weight quantization for optimal performance",
+                    prerequisites: [4],
+                    resources: ["advanced_quantization/awq_implementation.py"],
+                    year: "2023"
+                },
+                
+                // 2024-2025 Cutting-edge Research
+                {
+                    id: 7,
+                    label: "QuIP# & E8P",
+                    level: "advanced",
+                    topic: "quantization",
+                    source: "2024-2025",
+                    time: 4,
+                    description: "Lattice-based quantization and 8-bit post-training methods (2024)",
+                    prerequisites: [5, 6],
+                    resources: ["research_2024/quip_sharp_implementation.py"],
+                    year: "2024"
+                },
+                {
+                    id: 8,
+                    label: "BitNet b1.58",
+                    level: "advanced",
+                    topic: "quantization",
+                    source: "2024-2025",
+                    time: 5,
+                    description: "1.58-bit quantization breakthrough from Microsoft (2024)",
+                    prerequisites: [5, 6],
+                    resources: ["research_2024/bitnet_implementation.py"],
+                    year: "2024"
+                },
+                {
+                    id: 9,
+                    label: "MoE Quantization",
+                    level: "advanced",
+                    topic: "quantization",
+                    source: "2024-2025",
+                    time: 6,
+                    description: "Mixture of Experts quantization techniques (2024-2025)",
+                    prerequisites: [7, 8],
+                    resources: ["research_2024/moe_quantization.py"],
+                    year: "2024"
+                },
+                
+                // Abliteration Path
+                {
+                    id: 10,
+                    label: "Abliteration Basics",
+                    level: "beginner",
+                    topic: "abliteration",
+                    source: "academic",
+                    time: 1,
+                    description: "Understanding refusal mechanisms and removal techniques",
+                    prerequisites: [2],
+                    resources: ["tutorials/beginner/03_abliteration_intro.ipynb"],
+                    year: "2024"
+                },
+                {
+                    id: 11,
+                    label: "Inference Intervention",
+                    level: "intermediate",
+                    topic: "abliteration",
+                    source: "academic",
+                    time: 2,
+                    description: "Runtime modification of model behavior",
+                    prerequisites: [10],
+                    resources: ["abliteration/inference_intervention.py"],
+                    year: "2023"
+                },
+                {
+                    id: 12,
+                    label: "Selective Abliteration",
+                    level: "advanced",
+                    topic: "abliteration",
+                    source: "2024-2025",
+                    time: 4,
+                    description: "Topic-specific behavior modification (2024 research)",
+                    prerequisites: [11],
+                    resources: ["research_2024/selective_abliteration.py"],
+                    year: "2024"
+                },
+                
+                // Multi-Modal Path - Updated with 2024 research
+                {
+                    id: 13,
+                    label: "CLIP Optimization",
+                    level: "intermediate",
+                    topic: "multimodal",
+                    source: "openai",
+                    time: 2,
+                    description: "Vision-language model quantization",
+                    prerequisites: [4],
+                    resources: ["llm_toolkit/multimodal.py"],
+                    year: "2023"
+                },
+                {
+                    id: 14,
+                    label: "LLaVA Quantization",
+                    level: "intermediate",
+                    topic: "multimodal",
+                    source: "academic",
+                    time: 3,
+                    description: "Large Language and Vision Assistant optimization",
+                    prerequisites: [13],
+                    resources: ["multimodal/llava_optimization.py"],
+                    year: "2023"
+                },
+                {
+                    id: 15,
+                    label: "GPT-4V Techniques",
+                    level: "advanced",
+                    topic: "multimodal",
+                    source: "2024-2025",
+                    time: 5,
+                    description: "Latest vision-language optimization from OpenAI (2024)",
+                    prerequisites: [14],
+                    resources: ["research_2024/gpt4v_optimization.py"],
+                    year: "2024"
+                },
+                
+                // Distributed Computing - 2024 updates
+                {
+                    id: 16,
+                    label: "Tensor Parallelism",
+                    level: "intermediate",
+                    topic: "distributed",
+                    source: "academic",
+                    time: 3,
+                    description: "Splitting tensors across multiple GPUs",
+                    prerequisites: [5],
+                    resources: ["llm_toolkit/distributed.py"],
+                    year: "2023"
+                },
+                {
+                    id: 17,
+                    label: "Pipeline Parallelism",
+                    level: "intermediate",
+                    topic: "distributed",
+                    source: "academic",
+                    time: 3,
+                    description: "Layer-wise distribution across devices",
+                    prerequisites: [16],
+                    resources: ["distributed/pipeline_parallel.py"],
+                    year: "2023"
+                },
+                {
+                    id: 18,
+                    label: "Hybrid Parallelism",
+                    level: "advanced",
+                    topic: "distributed",
+                    source: "2024-2025",
+                    time: 5,
+                    description: "Advanced multi-dimensional parallelism (2024)",
+                    prerequisites: [16, 17],
+                    resources: ["research_2024/hybrid_parallelism.py"],
+                    year: "2024"
+                },
+                
+                // Novel Research - 2024-2025 breakthroughs
+                {
+                    id: 19,
+                    label: "Combined Optimization",
+                    level: "advanced",
+                    topic: "research",
+                    source: "2024-2025",
+                    time: 6,
+                    description: "Quantization + Abliteration synergies",
+                    prerequisites: [6, 12],
+                    resources: ["research_extensions/combined_optimization.py"],
+                    year: "2024"
+                },
+                {
+                    id: 20,
+                    label: "Neural Architecture Search",
+                    level: "research",
+                    topic: "research",
+                    source: "2024-2025",
+                    time: 8,
+                    description: "Automated quantization-aware architecture design (2024)",
+                    prerequisites: [8, 9],
+                    resources: ["research_2024/nas_quantization.py"],
+                    year: "2024"
+                },
+                {
+                    id: 21,
+                    label: "Quantum-Classical Hybrid",
+                    level: "research",
+                    topic: "research",
+                    source: "2024-2025",
+                    time: 10,
+                    description: "Quantum computing for LLM optimization (2025 preview)",
+                    prerequisites: [20],
+                    resources: ["research_2025/quantum_llm.py"],
+                    year: "2025"
+                },
+                
+                // Google Research - 2024 updates
+                {
+                    id: 22,
+                    label: "Gemini Optimization",
+                    level: "advanced",
+                    topic: "multimodal",
+                    source: "google",
+                    time: 4,
+                    description: "Google's latest multimodal optimization techniques",
+                    prerequisites: [15],
+                    resources: ["research_2024/gemini_optimization.py"],
+                    year: "2024"
+                },
+                {
+                    id: 23,
+                    label: "PaLM-2 Quantization",
+                    level: "advanced",
+                    topic: "quantization",
+                    source: "google",
+                    time: 4,
+                    description: "Pathways Language Model advanced quantization",
+                    prerequisites: [7],
+                    resources: ["research_2024/palm2_quantization.py"],
+                    year: "2024"
+                },
+                
+                // Meta Research - 2024 updates
+                {
+                    id: 24,
+                    label: "Llama 3 Optimization",
+                    level: "advanced",
+                    topic: "quantization",
+                    source: "meta",
+                    time: 4,
+                    description: "Latest Llama model optimization techniques",
+                    prerequisites: [8],
+                    resources: ["research_2024/llama3_optimization.py"],
+                    year: "2024"
+                },
+                {
+                    id: 25,
+                    label: "Code Llama 2 Quantization",
+                    level: "advanced",
+                    topic: "quantization",
+                    source: "meta",
+                    time: 3,
+                    description: "Advanced code generation model optimization",
+                    prerequisites: [24],
+                    resources: ["research_2024/code_llama2.py"],
+                    year: "2024"
+                }
+            ],
+            edges: []
+        };
+        
+        // Generate edges based on prerequisites
+        learningData.nodes.forEach(node => {
+            if (node.prerequisites && node.prerequisites.length > 0) {
+                node.prerequisites.forEach(prereq => {
+                    learningData.edges.push({
+                        from: prereq,
+                        to: node.id,
+                        arrows: 'to',
+                        color: { color: '#667eea', opacity: 0.6 }
+                    });
+                });
+            }
+        });
+        
+        // Color mapping for difficulty levels
+        const colorMap = {
+            beginner: '#4CAF50',
+            intermediate: '#2196F3',
+            advanced: '#FF9800',
+            research: '#9C27B0'
+        };
+        
+        // Prepare nodes for vis.js
+        const nodes = new vis.DataSet(
+            learningData.nodes.map(node => ({
+                id: node.id,
+                label: node.label,
+                color: {
+                    background: colorMap[node.level],
+                    border: colorMap[node.level],
+                    highlight: {
+                        background: colorMap[node.level],
+                        border: '#333'
+                    }
+                },
+                font: {
+                    color: 'white',
+                    size: 12,
+                    face: 'Segoe UI'
+                },
+                size: 20 + (node.time * 2),
+                title: `${node.label}\\n${node.description}\\nTime: ${node.time}h\\nYear: ${node.year}`,
+                ...node
+            }))
+        );
+        
+        const edges = new vis.DataSet(learningData.edges);
+        
+        // Network options
+        const options = {
+            layout: {
+                hierarchical: {
+                    enabled: true,
+                    direction: 'UD',
+                    sortMethod: 'directed',
+                    levelSeparation: 150,
+                    nodeSpacing: 200,
+                    treeSpacing: 200
+                }
+            },
+            physics: {
+                enabled: false
+            },
+            interaction: {
+                hover: true,
+                selectConnectedEdges: false
+            },
+            nodes: {
+                shape: 'dot',
+                borderWidth: 2,
+                shadow: {
+                    enabled: true,
+                    color: 'rgba(0,0,0,0.2)',
+                    size: 10,
+                    x: 2,
+                    y: 2
+                }
+            },
+            edges: {
+                width: 2,
+                smooth: {
+                    type: 'continuous',
+                    roundness: 0.2
+                }
+            }
+        };
+        
+        // Initialize network
+        const container = document.getElementById('network');
+        const network = new vis.Network(container, { nodes, edges }, options);
+        
+        // Info panel functionality
+        const infoPanel = document.getElementById('info-panel');
+        const infoTitle = document.getElementById('info-title');
+        const infoDescription = document.getElementById('info-description');
+        const actionButtons = document.getElementById('action-buttons');
+        
+        network.on('click', function(params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const nodeData = learningData.nodes.find(n => n.id === nodeId);
+                
+                if (nodeData) {
+                    infoTitle.textContent = nodeData.label;
+                    infoDescription.innerHTML = `
+                        <strong>Description:</strong> ${nodeData.description}<br>
+                        <strong>Level:</strong> ${nodeData.level}<br>
+                        <strong>Topic:</strong> ${nodeData.topic}<br>
+                        <strong>Time Required:</strong> ${nodeData.time} hours<br>
+                        <strong>Year:</strong> ${nodeData.year}<br>
+                        <strong>Prerequisites:</strong> ${nodeData.prerequisites.length > 0 ? 
+                            nodeData.prerequisites.map(p => 
+                                learningData.nodes.find(n => n.id === p)?.label
+                            ).join(', ') : 'None'}
+                    `;
+                    
+                    // Generate action buttons
+                    actionButtons.innerHTML = '';
+                    nodeData.resources.forEach(resource => {
+                        const button = document.createElement('a');
+                        button.className = 'action-button';
+                        button.href = resource;
+                        button.textContent = resource.includes('.ipynb') ? '📓 Notebook' : 
+                                           resource.includes('.py') ? '💻 Code' : '📖 Guide';
+                        actionButtons.appendChild(button);
+                    });
+                    
+                    infoPanel.style.display = 'block';
+                }
+            }
+        });
+        
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-button');
+        let activeFilters = { level: 'all', topic: null, source: null };
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filterType = this.dataset.filter || this.dataset.topic || this.dataset.source;
+                const filterCategory = this.dataset.filter ? 'level' : 
+                                     this.dataset.topic ? 'topic' : 'source';
+                
+                // Update active filters
+                if (filterCategory === 'level') {
+                    document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    activeFilters.level = filterType;
+                } else {
+                    if (this.classList.contains('active')) {
+                        this.classList.remove('active');
+                        activeFilters[filterCategory] = null;
+                    } else {
+                        document.querySelectorAll(`[data-${filterCategory}]`).forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        activeFilters[filterCategory] = filterType;
+                    }
+                }
+                
+                applyFilters();
+            });
+        });
+        
+        function applyFilters() {
+            const filteredNodes = learningData.nodes.filter(node => {
+                const levelMatch = activeFilters.level === 'all' || node.level === activeFilters.level;
+                const topicMatch = !activeFilters.topic || node.topic === activeFilters.topic;
+                const sourceMatch = !activeFilters.source || node.source === activeFilters.source;
+                
+                return levelMatch && topicMatch && sourceMatch;
+            });
+            
+            // Update network
+            const visibleNodeIds = filteredNodes.map(n => n.id);
+            const filteredEdges = learningData.edges.filter(edge => 
+                visibleNodeIds.includes(edge.from) && visibleNodeIds.includes(edge.to)
+            );
+            
+            nodes.clear();
+            edges.clear();
+            
+            nodes.add(filteredNodes.map(node => ({
+                id: node.id,
+                label: node.label,
+                color: {
+                    background: colorMap[node.level],
+                    border: colorMap[node.level],
+                    highlight: {
+                        background: colorMap[node.level],
+                        border: '#333'
+                    }
+                },
+                font: {
+                    color: 'white',
+                    size: 12,
+                    face: 'Segoe UI'
+                },
+                size: 20 + (node.time * 2),
+                title: `${node.label}\\n${node.description}\\nTime: ${node.time}h\\nYear: ${node.year}`,
+                ...node
+            })));
+            
+            edges.add(filteredEdges);
+            
+            // Update stats
+            updateStats(filteredNodes);
+        }
+        
+        function updateStats(nodes) {
+            const totalNodes = nodes.length;
+            const completedNodes = 0; // This would be tracked in localStorage
+            const totalTime = nodes.reduce((sum, node) => sum + node.time, 0);
+            
+            document.getElementById('completed-count').textContent = `${completedNodes}/${totalNodes}`;
+            document.getElementById('progress-count').textContent = '0';
+            document.getElementById('time-spent').textContent = `0/${totalTime} hours`;
+            
+            const progressPercent = (completedNodes / totalNodes) * 100;
+            document.querySelector('.progress-fill').style.width = `${progressPercent}%`;
+        }
+        
+        // Initialize with all nodes
+        updateStats(learningData.nodes);
+        
+        // Hide info panel when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!infoPanel.contains(event.target) && !event.target.closest('#network')) {
+                infoPanel.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
