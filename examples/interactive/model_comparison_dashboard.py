@@ -2,7 +2,7 @@
 Interactive Model Comparison Dashboard
 
 A Streamlit-based interactive dashboard for comparing different quantization methods
-and their effects on model performance. Perfect for beginners to understand trade-offs
+and their effects on model performance. Useful for beginners to understand trade-offs
 and for advanced users to make informed decisions.
 
 Features:

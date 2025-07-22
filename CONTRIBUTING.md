@@ -259,7 +259,7 @@ Brief description of changes and motivation.
 - **Contributors File**: All contributors listed in CONTRIBUTORS.md
 - **Release Notes**: Major contributions highlighted in releases
 - **Research Credits**: Academic contributors credited in papers/documentation
-- **Community Highlights**: Outstanding contributions featured in community updates
+- **Community Highlights**: Notable contributions featured in community updates
 
 ### Academic Attribution
 For research contributions:

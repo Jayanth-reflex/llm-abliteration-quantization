@@ -428,7 +428,7 @@ After completing Level 2 projects, you will:
 ### 🔬 **Level 3 Outcomes**
 After completing Level 3 projects, you will:
 
-- ✅ **Implement cutting-edge research** from 2024-2025 papers
+- ✅ **Implement latest research** from 2024-2025 papers
 - ✅ **Design novel optimization techniques** for specific use cases
 - ✅ **Lead AI optimization projects** in professional settings
 - ✅ **Contribute to open-source research** and academic publications

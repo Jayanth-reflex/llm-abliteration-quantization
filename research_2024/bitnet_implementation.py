@@ -1,5 +1,5 @@
 """
-BitNet b1.58: Revolutionary 1.58-bit Quantization Implementation
+BitNet b1.58: Advanced 1.58-bit Quantization Implementation
 
 Based on: "BitNet: Scaling 1-bit Transformers for Large Language Models" (Microsoft Research, 2024)
 Paper: https://arxiv.org/abs/2310.11453v2
@@ -546,10 +546,10 @@ class BitNetQuantizer:
 def main():
     """
     Example usage of BitNet quantization.
-    Demonstrates the revolutionary 1.58-bit quantization technique.
+    Demonstrates the advanced 1.58-bit quantization technique.
     """
     
-    print("🚀 BitNet b1.58 - Revolutionary 1.58-bit Quantization")
+    print("🚀 BitNet b1.58 - Advanced 1.58-bit Quantization")
     print("=" * 60)
     
     # Initialize quantizer

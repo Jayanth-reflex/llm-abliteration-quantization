@@ -52,7 +52,7 @@ Quantization reduces the precision of model weights from 32-bit to 4-bit, dramat
 ```
 
 ### 🧠 **Why QLoRA?**
-QLoRA (Quantized Low-Rank Adaptation) is perfect for this project because:
+QLoRA (Quantized Low-Rank Adaptation) is well-suited for this project because:
 - **Memory Efficient:** 4-bit quantization with minimal quality loss
 - **Fine-tuning Friendly:** Easy to customize for your business
 - **Production Ready:** Stable and well-tested in real applications

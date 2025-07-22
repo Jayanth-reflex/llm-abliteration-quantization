@@ -26,7 +26,7 @@ Welcome to the most vibrant LLM optimization community! Join thousands of develo
 
 **Channels:**
 - `#beginners` - New to LLM optimization? Start here!
-- `#project-showcase` - Share your amazing builds
+- `#project-showcase` - Share your project builds
 - `#research-discussion` - Latest papers and breakthroughs
 - `#job-opportunities` - Career advancement and hiring
 - `#study-groups` - Find learning partners
@@ -63,7 +63,7 @@ Join structured learning cohorts with peers at your level:
 - **Duration**: 12 weeks
 - **Commitment**: 12 hours/week
 - **Size**: 4-6 people
-- **Focus**: Implement cutting-edge research
+- **Focus**: Implement latest research
 - **Publication Goal**: Co-author research papers
 
 **🎯 Join Next Cohort:**
@@ -224,7 +224,7 @@ Partner with leading institutions:
 
 ### 🥇 **Community Awards** (Annual)
 
-#### **Outstanding Contributor Award**
+#### **Notable Contributor Award**
 - **Criteria**: Significant contributions to community projects
 - **Recognition**: $1000 prize + conference speaking opportunity
 - **Past Winners**: Featured on our Hall of Fame
@@ -235,7 +235,7 @@ Partner with leading institutions:
 - **Recognition**: $500 prize + project showcase
 
 #### **Mentor of the Year**
-- **Criteria**: Exceptional mentoring and community support
+- **Criteria**: Effective mentoring and community support
 - **Recognition**: $500 prize + mentor retreat invitation
 
 #### **Research Impact Award**
@@ -329,7 +329,7 @@ Partner with leading institutions:
 - **Speak at events** and represent the community
 
 #### **Drive Innovation**
-- **Implement cutting-edge research** and share findings
+- **Implement latest research** and share findings
 - **Collaborate on novel techniques** with other experts
 - **Partner with companies** on real-world challenges
 - **Publish research** with community co-authors

@@ -103,7 +103,7 @@ model = AutoModelForCausalLM.from_pretrained(
   - Use NVIDIA unified memory to handle memory spikes during training, enabling large-batch training on limited hardware.
 
 **Memory Efficiency:**
-- QLORA reduces the memory required to finetune a 65B model from >780GB to <48GB, making state-of-the-art LLM finetuning accessible to researchers and small teams.
+- QLORA reduces the memory required to finetune a 65B model from >780GB to <48GB, making advanced LLM finetuning accessible to researchers and small teams.
 
 **Performance:**
 - QLORA-tuned models (Guanaco family) match or exceed the performance of much larger, more resource-intensive models on benchmarks like Vicuna and MMLU.
