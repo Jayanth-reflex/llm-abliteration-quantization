@@ -526,8 +526,6 @@ graph TD
 
 ---
 
-## 🌟 **What Makes This Repository Legendary**
-
 <div align="center">
 
 ### 🏆 **Complete LLM Optimization Resource**
@@ -606,5 +604,3 @@ graph TD
 </div>
 
 ---
-
-**🌟 Star this repo • 🍴 Fork for your research • 💬 Join our community • 📚 Start your journey!** 
