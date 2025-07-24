@@ -574,11 +574,6 @@ graph TD
 </td>
 <td width="20%">
 
-**🌍 Global Impact**
-- 50+ countries using
-- 1000+ researchers contributing
-- 10000+ models optimized
-- Millions of parameters saved
 
 </td>
 </tr>
@@ -606,16 +601,7 @@ graph TD
 
 </div>
 
-### **🌟 Community Stats**
 
-<div align="center">
-
-![GitHub stars](https://img.shields.io/github/stars/your-repo/llm-optimization?style=social)
-![GitHub forks](https://img.shields.io/github/forks/your-repo/llm-optimization?style=social)
-![GitHub contributors](https://img.shields.io/github/contributors/your-repo/llm-optimization?style=social)
-![GitHub issues](https://img.shields.io/github/issues/your-repo/llm-optimization?style=social)
-
-**📈 Growing Fast:** +500 stars/month • +100 contributors • +50 papers implemented
 
 </div>
 
